@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
@@ -13,19 +14,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateUtils;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pe.asomapps.xyzreader.R;
 import pe.asomapps.xyzreader.data.ArticleLoader;
-import pe.asomapps.xyzreader.data.ItemsContract;
 import pe.asomapps.xyzreader.data.UpdaterService;
-import pe.asomapps.xyzreader.ui.DynamicHeightNetworkImageView;
-import pe.asomapps.xyzreader.ui.ImageLoaderHelper;
 import pe.asomapps.xyzreader.ui.adapters.ArticleListAdapter;
 
 /**
@@ -36,10 +30,14 @@ import pe.asomapps.xyzreader.ui.adapters.ArticleListAdapter;
  */
 public class ArticleListActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbar;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
-    @Bind(R.id.recycler) RecyclerView recycler;
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefresh;
+    @Bind(R.id.recycler)
+    RecyclerView recycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +45,7 @@ public class ArticleListActivity extends BaseActivity implements LoaderManager.L
         setContentView(R.layout.activity_article_list);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
+        setupToolbar();
         getSupportLoaderManager().initLoader(0, null, this);
 
         if (savedInstanceState == null) {
@@ -62,6 +58,14 @@ public class ArticleListActivity extends BaseActivity implements LoaderManager.L
                 refresh();
             }
         });
+    }
+
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/rosario_regular.ttf");
+        collapsingToolbar.setCollapsedTitleTypeface(typeface);
+        collapsingToolbar.setExpandedTitleTypeface(typeface);
     }
 
     private void refresh() {

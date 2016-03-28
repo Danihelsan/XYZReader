@@ -11,6 +11,6 @@
     <!-- THIS IS THE MINIMUM HEIGHT REQUIRED TO DISPLAY THE TITLE IN A CollapsingToolbarLayout
     onBoundsChanged() is returning false because mExpandedBounds.height() < 0 if less than 121dp for the
     AppBarLayout' height property-->
-    <dimen name="detail_backdrop_height">256dp</dimen>
+    <dimen name="detail_backdrop_height">192dp</dimen>
 
 </resources>
