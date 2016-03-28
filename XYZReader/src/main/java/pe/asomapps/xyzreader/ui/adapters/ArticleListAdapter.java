@@ -40,8 +40,10 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parent.getContext().startActivity(new Intent(Intent.ACTION_VIEW,
-                        ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+                long itemId = getItemId(vh.getAdapterPosition());
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        ItemsContract.Items.buildItemUri(itemId));
+                parent.getContext().startActivity(intent);
             }
         });
         return vh;
@@ -65,7 +67,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
                 + " by "
                 + mCursor.getString(ArticleLoader.Query.AUTHOR);
 
-        if (aspectRatio<=1.125f){
+        if (aspectRatio <= 1.125f) {
             holder.insideContainer.setVisibility(View.VISIBLE);
             holder.outsideContainer.setVisibility(View.GONE);
 
@@ -87,18 +89,26 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
 
     public class ItemHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.rootView) View rootView;
-        @Bind(R.id.thumbnail) DynamicHeightNetworkImageView thumbnailView;
-        @Bind(R.id.insideContainer) ViewGroup insideContainer;
-        @Bind(R.id.outsideContainer) ViewGroup outsideContainer;
-        @Bind(R.id.inside_title) TextView insideTitle;
-        @Bind(R.id.inside_subtitle) TextView insideSubtitle;
-        @Bind(R.id.outside_title) TextView outsideTitle;
-        @Bind(R.id.outside_subtitle) TextView outsideSubtitle;
+        @Bind(R.id.rootView)
+        View rootView;
+        @Bind(R.id.thumbnail)
+        DynamicHeightNetworkImageView thumbnailView;
+        @Bind(R.id.insideContainer)
+        ViewGroup insideContainer;
+        @Bind(R.id.outsideContainer)
+        ViewGroup outsideContainer;
+        @Bind(R.id.inside_title)
+        TextView insideTitle;
+        @Bind(R.id.inside_subtitle)
+        TextView insideSubtitle;
+        @Bind(R.id.outside_title)
+        TextView outsideTitle;
+        @Bind(R.id.outside_subtitle)
+        TextView outsideSubtitle;
 
         public ItemHolder(View view) {
             super(view);
-            ButterKnife.bind(this,view);
+            ButterKnife.bind(this, view);
         }
     }
 }

@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -29,7 +30,6 @@ import pe.asomapps.xyzreader.ui.adapters.ArticleListAdapter;
  * activity presents a grid of items as cards.
  */
 public class ArticleListActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-
     @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
     @Bind(R.id.toolbar)
@@ -38,7 +38,6 @@ public class ArticleListActivity extends BaseActivity implements LoaderManager.L
     SwipeRefreshLayout swipeRefresh;
     @Bind(R.id.recycler)
     RecyclerView recycler;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +47,6 @@ public class ArticleListActivity extends BaseActivity implements LoaderManager.L
         setupToolbar();
         getSupportLoaderManager().initLoader(0, null, this);
 
-        if (savedInstanceState == null) {
-            refresh();
-        }
-
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -59,7 +54,6 @@ public class ArticleListActivity extends BaseActivity implements LoaderManager.L
             }
         });
     }
-
     private void setupToolbar() {
         setSupportActionBar(toolbar);
 
@@ -108,7 +102,7 @@ public class ArticleListActivity extends BaseActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        ArticleListAdapter adapter = new ArticleListAdapter(cursor);
+        ArticleListAdapter adapter = new ArticleListAdapter(this, cursor);
         adapter.setHasStableIds(true);
         recycler.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);

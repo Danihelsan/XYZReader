@@ -12,5 +12,7 @@
     onBoundsChanged() is returning false because mExpandedBounds.height() < 0 if less than 121dp for the
     AppBarLayout' height property-->
     <dimen name="detail_backdrop_height">192dp</dimen>
+    <dimen name="padding_normal">8dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
 
 </resources>
