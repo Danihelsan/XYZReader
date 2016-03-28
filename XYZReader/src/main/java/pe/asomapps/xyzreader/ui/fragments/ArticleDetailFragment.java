@@ -1,4 +1,4 @@
-package pe.asomapps.xyzreader.ui;
+package pe.asomapps.xyzreader.ui.fragments;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,13 +27,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import pe.asomapps.xyzreader.R;
 import pe.asomapps.xyzreader.data.ArticleLoader;
+import pe.asomapps.xyzreader.ui.activities.ArticleListActivity;
+import pe.asomapps.xyzreader.ui.DrawInsetsFrameLayout;
+import pe.asomapps.xyzreader.ui.ImageLoaderHelper;
+import pe.asomapps.xyzreader.ui.ObservableScrollView;
+import pe.asomapps.xyzreader.ui.activities.ArticleDetailActivity;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
  * either contained in a {@link ArticleListActivity} in two-pane mode (on
  * tablets) or a {@link ArticleDetailActivity} on handsets.
  */
-public class ArticleDetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ArticleDetailFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "ArticleDetailFragment";
 
     public static final String ARG_ITEM_ID = "item_id";

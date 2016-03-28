@@ -17,15 +17,10 @@
 
 <resources>
 
-    <style name="Base.AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/theme_primary</item>
-        <item name="colorPrimaryDark">@color/theme_primary_dark</item>
-        <item name="colorAccent">@color/theme_accent</item>
-    </style>
-
-    <!-- res/values-v19/styles.xml -->
+    <!-- res/values-v21/styles.xml -->
     <style name="AppTheme" parent="Base.AppTheme">
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
 </resources>

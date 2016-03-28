@@ -1,4 +1,4 @@
-package pe.asomapps.xyzreader.ui;
+package pe.asomapps.xyzreader.ui.activities;
 
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
@@ -18,11 +18,12 @@ import android.view.WindowInsets;
 
 import pe.asomapps.xyzreader.data.ArticleLoader;
 import pe.asomapps.xyzreader.data.ItemsContract;
+import pe.asomapps.xyzreader.ui.fragments.ArticleDetailFragment;
 
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
  */
-public class ArticleDetailActivity extends AppCompatActivity
+public class ArticleDetailActivity extends BaseActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private Cursor mCursor;
