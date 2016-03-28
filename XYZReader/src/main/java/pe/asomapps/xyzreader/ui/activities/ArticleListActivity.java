@@ -102,7 +102,7 @@ public class ArticleListActivity extends BaseActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        ArticleListAdapter adapter = new ArticleListAdapter(this, cursor);
+        ArticleListAdapter adapter = new ArticleListAdapter(cursor);
         adapter.setHasStableIds(true);
         recycler.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
