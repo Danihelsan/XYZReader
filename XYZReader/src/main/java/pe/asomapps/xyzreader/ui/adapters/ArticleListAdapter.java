@@ -50,18 +50,34 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
         mCursor.moveToPosition(position);
-        holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-        holder.subtitleView.setText(
-                DateUtils.getRelativeTimeSpanString(
-                        mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                        DateUtils.FORMAT_ABBREV_ALL).toString()
-                        + " by "
-                        + mCursor.getString(ArticleLoader.Query.AUTHOR));
         holder.thumbnailView.setImageUrl(
                 mCursor.getString(ArticleLoader.Query.THUMB_URL),
                 ImageLoaderHelper.getInstance(holder.rootView.getContext()).getImageLoader());
-        holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
+
+        float aspectRatio = mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO);
+        holder.thumbnailView.setAspectRatio(aspectRatio);
+
+        String title = mCursor.getString(ArticleLoader.Query.TITLE);
+        String subTitle = DateUtils.getRelativeTimeSpanString(
+                mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
+                System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                DateUtils.FORMAT_ABBREV_ALL).toString()
+                + " by "
+                + mCursor.getString(ArticleLoader.Query.AUTHOR);
+
+        if (aspectRatio<=1.125f){
+            holder.insideContainer.setVisibility(View.VISIBLE);
+            holder.outsideContainer.setVisibility(View.GONE);
+
+            holder.insideTitle.setText(title);
+            holder.insideSubtitle.setText(subTitle);
+        } else {
+            holder.outsideContainer.setVisibility(View.VISIBLE);
+            holder.insideContainer.setVisibility(View.GONE);
+
+            holder.outsideTitle.setText(title);
+            holder.outsideSubtitle.setText(subTitle);
+        }
     }
 
     @Override
@@ -73,15 +89,16 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     public class ItemHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.rootView) View rootView;
         @Bind(R.id.thumbnail) DynamicHeightNetworkImageView thumbnailView;
-        @Bind(R.id.article_title) TextView titleView;
-        @Bind(R.id.article_subtitle) TextView subtitleView;
+        @Bind(R.id.insideContainer) ViewGroup insideContainer;
+        @Bind(R.id.outsideContainer) ViewGroup outsideContainer;
+        @Bind(R.id.inside_title) TextView insideTitle;
+        @Bind(R.id.inside_subtitle) TextView insideSubtitle;
+        @Bind(R.id.outside_title) TextView outsideTitle;
+        @Bind(R.id.outside_subtitle) TextView outsideSubtitle;
 
         public ItemHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
-            thumbnailView = (DynamicHeightNetworkImageView) view.findViewById(R.id.thumbnail);
-            titleView = (TextView) view.findViewById(R.id.article_title);
-            subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
         }
     }
 }

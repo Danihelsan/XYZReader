@@ -20,5 +20,6 @@
     <color name="theme_primary_dark">#546E7A</color>
     <color name="theme_accent">#90A4AE</color>
 
+    <color name="theme_primary_dark_translucent">#66546E7A</color>
     <color name="white">#FFFFFF</color>
 </resources>
