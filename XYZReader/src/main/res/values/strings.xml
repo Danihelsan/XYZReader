@@ -7,6 +7,6 @@
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
 
-    <string name="up">Up</string>
+    <string name="share_text">Hey! Check the article \"%1$s\" from Asom Reader ;)</string>
 
 </resources>

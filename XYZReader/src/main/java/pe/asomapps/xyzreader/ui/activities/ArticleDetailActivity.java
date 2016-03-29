@@ -1,16 +1,20 @@
 package pe.asomapps.xyzreader.ui.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
@@ -36,6 +40,9 @@ public class ArticleDetailActivity extends BaseActivity implements LoaderManager
 
     @Bind(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
+
+    @Bind(R.id.share_fab)
+    FloatingActionButton shareFab;
 
     private Cursor cursor;
     private long startId;
@@ -70,6 +77,19 @@ public class ArticleDetailActivity extends BaseActivity implements LoaderManager
                     collapsingToolbar.setTitle(title);
                     toolbarImage.setImageUrl(
                             imageUrl,ImageLoaderHelper.getInstance(ArticleDetailActivity.this).getImageLoader());
+                }
+            }
+        });
+
+        shareFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cursor!= null && cursor.getPosition()>0){
+                    String shareText = cursor.getString(ArticleLoader.Query.TITLE);
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(ArticleDetailActivity.this)
+                        .setType("text/plain")
+                        .setText(getString(R.string.share_text,shareText))
+                        .getIntent(), getString(R.string.action_share)));
                 }
             }
         });
