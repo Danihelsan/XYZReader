@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -38,6 +37,9 @@ public class ArticleListActivity extends BaseActivity implements LoaderManager.L
     SwipeRefreshLayout swipeRefresh;
     @Bind(R.id.recycler)
     RecyclerView recycler;
+
+    private ArticleListAdapter listAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,9 +104,9 @@ public class ArticleListActivity extends BaseActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        ArticleListAdapter adapter = new ArticleListAdapter(cursor);
-        adapter.setHasStableIds(true);
-        recycler.setAdapter(adapter);
+        listAdapter = new ArticleListAdapter(cursor);
+        listAdapter.setHasStableIds(true);
+        recycler.setAdapter(listAdapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
         StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         recycler.setLayoutManager(sglm);
