@@ -13,6 +13,7 @@ import android.support.v4.app.ShareCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import pe.asomapps.xyzreader.ui.fragments.ArticleDetailFragment;
  * An activity representing a single Article detail screen, letting you swipe between articles.
  */
 public class ArticleDetailActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+    private final int SHARE_REQUESTCODE = 10001;
     @Bind(R.id.view_pager) ViewPager pager;
     @Bind(R.id.toolbar_image)
     FadeInNetworkImageView toolbarImage;
@@ -86,10 +88,10 @@ public class ArticleDetailActivity extends BaseActivity implements LoaderManager
             public void onClick(View v) {
                 if (cursor!= null && cursor.getPosition()>0){
                     String shareText = cursor.getString(ArticleLoader.Query.TITLE);
-                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(ArticleDetailActivity.this)
+                startActivityForResult(Intent.createChooser(ShareCompat.IntentBuilder.from(ArticleDetailActivity.this)
                         .setType("text/plain")
                         .setText(getString(R.string.share_text,shareText))
-                        .getIntent(), getString(R.string.action_share)));
+                        .getIntent(), getString(R.string.action_share)),SHARE_REQUESTCODE);
                 }
             }
         });
@@ -122,6 +124,21 @@ public class ArticleDetailActivity extends BaseActivity implements LoaderManager
                 this.cursor.moveToNext();
             }
             startId = 0;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode ==SHARE_REQUESTCODE){
+            Log.d("","");
+            if (resultCode == RESULT_OK){
+                Log.d("","");
+
+            } else if (resultCode == RESULT_CANCELED){
+                Log.d("","");
+
+            }
         }
     }
 

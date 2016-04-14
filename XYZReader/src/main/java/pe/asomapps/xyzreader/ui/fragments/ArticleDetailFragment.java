@@ -79,18 +79,17 @@ public class ArticleDetailFragment extends BaseFragment implements LoaderManager
 
     private void bindViews() {
         if (cursor!=null){
-            Spanned byLineText = Html.fromHtml(
-                    DateUtils.getRelativeTimeSpanString(
+            String textColor = Integer.toHexString(getResources().getColor(R.color.theme_primary) & 0x00ffffff);
+            Spanned byLineText = Html.fromHtml("<font color='#"+ textColor + "'>" +
+            DateUtils.getRelativeTimeSpanString(
                             cursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
                             System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by <font color='#ffffff'>"
-                            + cursor.getString(ArticleLoader.Query.AUTHOR)
-                            + "</font>");
+                            DateUtils.FORMAT_ABBREV_ALL).toString() + " by "
+                            + cursor.getString(ArticleLoader.Query.AUTHOR) + "</font>");
             byLine.setMovementMethod(new LinkMovementMethod());
             byLine.setText(byLineText);
 
-            Spanned bodyText = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY));
+            Spanned bodyText = Html.fromHtml(" <font color='#"+textColor+"'>"+cursor.getString(ArticleLoader.Query.BODY)+"</font>");
             body.setText(bodyText);
         }
     }
